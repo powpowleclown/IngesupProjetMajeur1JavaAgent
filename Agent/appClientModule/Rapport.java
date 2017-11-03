@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Computer {
+public class Rapport {
 	
 	private String availableProcessor;
 	private String freeMemory;
@@ -13,20 +13,20 @@ public class Computer {
 	//private String procSpeed;
 	private List<Root> rootslist;
 	
-	public Computer(Runtime runtime)
+	public Rapport(Runtime runtime)
 	{
 		this.setAvailableProcessor("Available processors (cores): " + runtime.availableProcessors());
 		this.setFreeMemory("Free memory (bytes): " + runtime.freeMemory());
 		this.setMaxMemory("Maximum memory (bytes): " + (runtime.maxMemory() == Long.MAX_VALUE ? "no limit" : runtime.maxMemory()));
 		this.setTotalMemory("Total memory available to JVM (bytes): " + runtime.totalMemory());
 		
-		rootslist = new ArrayList<Root>();
+		/*rootslist = new ArrayList<Root>();
 		File[] roots = File.listRoots();
 	   for (File rootfile : roots)
 	   {
 		   Root root = new Root(rootfile);
 		   rootslist.add(root);
-	    }
+	    }*/
 	}
 	
 	public String getAvailableProcessor() {
