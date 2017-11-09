@@ -1,3 +1,6 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -19,8 +22,12 @@ import com.majeurProjet.metier.Role;
 
 public class Agent {
 
-	public static void main(String[] args) {
+	public static String ComputerIp;
+	
+	public static void main(String[] args) throws UnknownHostException {
 		// TODO Auto-generated method stub
+		ComputerIp = InetAddress.getLocalHost().getHostAddress();
+		System.out.println(ComputerIp);
 		Rapport rapport = new Rapport(Runtime.getRuntime());
 		//computer.Affichage();
 		Rapport(rapport);
@@ -31,7 +38,7 @@ public class Agent {
 		Client client = ClientBuilder.newBuilder().newClient();
 		WebTarget target = client.target("http://localhost:8080/MajeurProjet/rest");
 		
-		target = target.path("computer_rest/"+14);
+		target = target.path("computer_rest/by_ip/"+ComputerIp);
 		Invocation.Builder builder = target.request();
 		Response response = builder.get();	
 		Computer computerGet = builder.get(Computer.class);

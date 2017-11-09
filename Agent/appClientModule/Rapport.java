@@ -15,10 +15,10 @@ public class Rapport {
 	
 	public Rapport(Runtime runtime)
 	{
-		this.setAvailableProcessor("Available processors (cores): " + runtime.availableProcessors());
-		this.setFreeMemory("Free memory (bytes): " + runtime.freeMemory());
-		this.setMaxMemory("Maximum memory (bytes): " + (runtime.maxMemory() == Long.MAX_VALUE ? "no limit" : runtime.maxMemory()));
-		this.setTotalMemory("Total memory available to JVM (bytes): " + runtime.totalMemory());
+		this.setAvailableProcessor(""+runtime.availableProcessors());
+		this.setFreeMemory(""+runtime.freeMemory());
+		this.setMaxMemory(""+(runtime.maxMemory() == Long.MAX_VALUE ? "no limit" : runtime.maxMemory()));
+		this.setTotalMemory(""+runtime.totalMemory());
 		
 		/*rootslist = new ArrayList<Root>();
 		File[] roots = File.listRoots();
