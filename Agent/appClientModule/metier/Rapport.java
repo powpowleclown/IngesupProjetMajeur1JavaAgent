@@ -1,9 +1,11 @@
+package metier;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rapport {
 	
+	private String computerIP;
 	private String availableProcessor;
 	private String freeMemory;
 	private String maxMemory;
@@ -13,8 +15,9 @@ public class Rapport {
 	//private String procSpeed;
 	private List<Root> rootslist;
 	
-	public Rapport(Runtime runtime)
+	public Rapport(String computerIp, Runtime runtime)
 	{
+		this.computerIP = computerIp;
 		this.setAvailableProcessor(""+runtime.availableProcessors());
 		this.setFreeMemory(""+runtime.freeMemory());
 		this.setMaxMemory(""+(runtime.maxMemory() == Long.MAX_VALUE ? "no limit" : runtime.maxMemory()));
@@ -29,6 +32,14 @@ public class Rapport {
 	    }*/
 	}
 	
+	public String getComputerIP() {
+		return computerIP;
+	}
+
+	public void setComputerIP(String computerIP) {
+		this.computerIP = computerIP;
+	}
+
 	public String getAvailableProcessor() {
 		return availableProcessor;
 	}

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.majeurProjet.metier.Computer;
 import com.majeurProjet.metier.ComputerData;
 import com.majeurProjet.metier.Role;
+import com.majeurProjet.metier.Rapport;
 
 public class Agent {
 
@@ -26,14 +27,25 @@ public class Agent {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		// TODO Auto-generated method stub
-		ComputerIp = InetAddress.getLocalHost().getHostAddress();
-		System.out.println(ComputerIp);
-		Rapport rapport = new Rapport(Runtime.getRuntime());
-		//computer.Affichage();
-		Rapport(rapport);
+		 while (true) 
+		 {
+			ComputerIp = InetAddress.getLocalHost().getHostAddress();
+			System.out.println(ComputerIp);
+			Rapport rapport = new Rapport(ComputerIp, Runtime.getRuntime());
+			//computer.Affichage();
+			Rapport(rapport);
+			
+			 try 
+			 {
+		          Thread.sleep(500);
+	        } 
+			catch (InterruptedException ie) 
+			{
+	        }
+		 }
 	}
 	
-	public static void Rapport(Rapport rapport)
+	public static void Rapport(com.majeurProjet.metier.Rapport rapport)
 	{
 		Client client = ClientBuilder.newBuilder().newClient();
 		WebTarget target = client.target("http://localhost:8080/MajeurProjet/rest");
