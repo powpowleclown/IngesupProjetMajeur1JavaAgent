@@ -27,13 +27,15 @@ public class Agent {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		// TODO Auto-generated method stub
+		MulticastReceiver.MulticastReceiverMain();;
 		 while (true) 
 		 {
-			ComputerIp = InetAddress.getLocalHost().getHostAddress();
+			ComputerIp = "224.0.1.0";
+			//ComputerIp = args[0];
 			System.out.println(ComputerIp);
 			Rapport rapport = new Rapport(ComputerIp, Runtime.getRuntime());
 			//computer.Affichage();
-			Rapport(rapport);
+			Rapport(rapport,args[1]);
 			
 			 try 
 			 {
@@ -45,11 +47,11 @@ public class Agent {
 		 }
 	}
 	
-	public static void Rapport(com.majeurProjet.metier.Rapport rapport)
+	public static void Rapport(com.majeurProjet.metier.Rapport rapport, String addrest)
 	{
 		Client client = ClientBuilder.newBuilder().newClient();
 		WebTarget target = client.target("http://localhost:8080/MajeurProjet/rest");
-		
+		//WebTarget target = client.target("http://"+addrest+"/MajeurProjet/rest");
 		target = target.path("computer_rest/by_ip/"+ComputerIp);
 		Invocation.Builder builder = target.request();
 		Response response = builder.get();	

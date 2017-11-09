@@ -6,7 +6,7 @@ import java.net.MulticastSocket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.majeurProjet.metier.Rapport;
 public class MulticastReceiver {
-	  public static void main(String[] args) {
+	  public static void MulticastReceiverMain() {
 		    MulticastSocket socket = null;
 		    DatagramPacket inPacket = null;
 		    DatagramPacket outPacket = null;
@@ -24,7 +24,6 @@ public class MulticastReceiver {
 		        inPacket = new DatagramPacket(inBuf, inBuf.length);
 		        socket.receive(inPacket);
 		        String inmsg = new String(inBuf, 0, inPacket.getLength());
-		        System.out.println(inmsg);
 		        String outmsg;
 		        switch(inmsg)
 		        {
@@ -36,7 +35,7 @@ public class MulticastReceiver {
 		        	break;
 		        case "DATA":
 		        	ObjectMapper mapper = new ObjectMapper();
-		        	Rapport rapport = new Rapport(address.toString().substring(0),Runtime.getRuntime());
+		        	Rapport rapport = new Rapport(address.toString().substring(1),Runtime.getRuntime());
 		        	String jsonInString = mapper.writeValueAsString(rapport);
 		        	outmsg = "DATA-"+jsonInString;
 			        outBuf = outmsg.getBytes();
