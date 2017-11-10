@@ -1,19 +1,34 @@
-import java.io.IOException;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.majeurProjet.broadcast.MulticastSender;
 import com.majeurProjet.metier.Rapport;
-public class MulticastReceiver {
-	  public static void MulticastReceiverMain() {
-		    MulticastSocket socket = null;
-		    DatagramPacket inPacket = null;
-		    DatagramPacket outPacket = null;
-		    byte[] outBuf;
-		    final int PORT = 8888;
-		    
-		    byte[] inBuf = new byte[256];
+
+public class MulticastReceiver implements Runnable 
+{
+	Thread mythread;
+	MulticastSocket socket;
+    DatagramPacket inPacket;
+    DatagramPacket outPacket;
+    byte[] outBuf;
+    final int PORT = 8888;
+    byte[] inBuf = new byte[256];
+
+	  public MulticastReceiver() 
+	  {
+			socket = null;
+		    inPacket = null;
+		    outPacket = null;
+		    mythread = new Thread(this,"MulticastReceiver");
+		    mythread.start();
+	  }
+
+	@Override
+	public void run() {
+		 
 		    try {
 		      //Prepare to join multicast group
 		      socket = new MulticastSocket(8888);
@@ -25,7 +40,8 @@ public class MulticastReceiver {
 		        socket.receive(inPacket);
 		        String inmsg = new String(inBuf, 0, inPacket.getLength());
 		        String outmsg;
-		        switch(inmsg)
+		        System.out.println("IN " + inmsg);
+		        switch(inmsg.toUpperCase())
 		        {
 		        case "PING":
 		        	outmsg = "PING-"+address.toString();
@@ -48,8 +64,10 @@ public class MulticastReceiver {
 		        }
 		       
 		      }
-		    } catch (IOException ioe) {
+		    } 
+		    catch (Exception ioe) 
+		    {
 		      System.out.println(ioe);
 		    }
-		  }
+	}
 }

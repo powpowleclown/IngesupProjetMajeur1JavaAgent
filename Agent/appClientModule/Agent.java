@@ -1,24 +1,13 @@
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.cxf.jaxrs.provider.json.JSONProvider;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MappingJsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.majeurProjet.metier.Computer;
 import com.majeurProjet.metier.ComputerData;
-import com.majeurProjet.metier.Role;
 import com.majeurProjet.metier.Rapport;
 
 public class Agent {
@@ -27,7 +16,7 @@ public class Agent {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		// TODO Auto-generated method stub
-		MulticastReceiver.MulticastReceiverMain();;
+		MulticastReceiver broadcast = new MulticastReceiver();
 		 while (true) 
 		 {
 			ComputerIp = "224.0.1.0";
@@ -35,11 +24,11 @@ public class Agent {
 			System.out.println(ComputerIp);
 			Rapport rapport = new Rapport(ComputerIp, Runtime.getRuntime());
 			//computer.Affichage();
-			Rapport(rapport,args[1]);
+			Rapport(rapport,ComputerIp);
 			
 			 try 
 			 {
-		          Thread.sleep(500);
+		          Thread.sleep(600000);
 	        } 
 			catch (InterruptedException ie) 
 			{
