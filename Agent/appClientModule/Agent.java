@@ -1,4 +1,9 @@
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -16,12 +21,13 @@ public class Agent {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		// TODO Auto-generated method stub
+		System.out.println(MulticastReceiver.getMacAddress());
 		MulticastReceiver broadcast = new MulticastReceiver();
 		 while (true) 
 		 {
 			ComputerIp = "224.0.1.0";
 			//ComputerIp = args[0];
-			System.out.println(ComputerIp);
+			//System.out.println(ComputerIp);
 			Rapport rapport = new Rapport(ComputerIp, Runtime.getRuntime());
 			//computer.Affichage();
 			Rapport(rapport,ComputerIp);

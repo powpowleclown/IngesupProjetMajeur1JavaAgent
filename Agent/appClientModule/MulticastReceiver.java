@@ -1,10 +1,14 @@
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.MulticastSocket;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.majeurProjet.broadcast.MulticastSender;
 import com.majeurProjet.metier.Rapport;
 
 public class MulticastReceiver implements Runnable 
@@ -34,7 +38,6 @@ public class MulticastReceiver implements Runnable
 		      socket = new MulticastSocket(8888);
 		      InetAddress address = InetAddress.getByName("224.0.1.0");
 		      socket.joinGroup(address);
-		 
 		      while (true) {
 		        inPacket = new DatagramPacket(inBuf, inBuf.length);
 		        socket.receive(inPacket);
@@ -44,7 +47,7 @@ public class MulticastReceiver implements Runnable
 		        switch(inmsg.toUpperCase())
 		        {
 		        case "PING":
-		        	outmsg = "PING-"+address.toString();
+		        	outmsg = "PING-"+address.toString()+"-"+getMacAddress();
 			        outBuf = outmsg.getBytes();
 			        outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
 			        socket.send(outPacket);
@@ -70,4 +73,25 @@ public class MulticastReceiver implements Runnable
 		      System.out.println(ioe);
 		    }
 	}
+	
+	public static String getMacAddress(){
+		InetAddress ip;
+		StringBuilder sb = new StringBuilder();
+		try {
+			ip = InetAddress.getLocalHost();
+			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+			byte[] mac = network.getHardwareAddress();
+			//sb = new StringBuilder();
+			for (int i = 0; i < mac.length; i++) {
+				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+			}		
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (SocketException e){
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
 }
+
+
